@@ -150,7 +150,7 @@ public class ApkDecoder {
                 }
             }
 
-            if (hasMultipleSources()) {
+            if (hasMultipleSources()) {//依次解包dex
                 // foreach unknown dex file in root, lets disassemble it
                 Set<String> files = mApkFile.getDirectory().getFiles(true);
                 for (String file : files) {
@@ -175,7 +175,7 @@ public class ApkDecoder {
                     }
                 }
             }
-
+            //释放未知数据和Raw数据
             mAndrolib.decodeRawFiles(mApkFile, outDir, mDecodeAssets);
             mAndrolib.decodeUnknownFiles(mApkFile, outDir, mResTable);
             mUncompressedFiles = new ArrayList<String>();

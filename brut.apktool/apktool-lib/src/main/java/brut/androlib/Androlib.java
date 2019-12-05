@@ -166,12 +166,22 @@ public class Androlib {
             String ext;
 
             for (String file : files) {
+//<<<<<<< Updated upstream
                 if (isAPKFileNames(file) && unk.getCompressionLevel(file) == 0 && unk.getSize(file) != 0) {
                     ext = FilenameUtils.getExtension(file);
 
                     if (ext.isEmpty() || !NO_COMPRESS_PATTERN.matcher(ext).find()) {
+//=======
+//                if (isAPKFileNames(file) &&
+//                    unk.getCompressionLevel(file) == 0 &&
+//                    unk.getSize(file) != 0) {
+//                    //获取.的后缀  如果没有点后缀就是文件名
+//                    if (StringUtils.countMatches(file, ".") > 1) {
+//>>>>>>> Stashed changes
                         ext = file;
                     }
+
+                    //把没有压缩的文件放入uncompressedFilesOrExts
                     if (!uncompressedFilesOrExts.contains(ext)) {
                         uncompressedFilesOrExts.add(ext);
                     }

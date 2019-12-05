@@ -224,16 +224,16 @@ final public class AndrolibResources {
 
     public void decode(ResTable resTable, ExtFile apkFile, File outDir)
             throws AndrolibException {
-        Duo<ResFileDecoder, AXmlResourceParser> duo = getResFileDecoder();
+        Duo<ResFileDecoder, AXmlResourceParser> duo = getResFileDecoder();//有注入
         ResFileDecoder fileDecoder = duo.m1;
         ResAttrDecoder attrDecoder = duo.m2.getAttrDecoder();
-
+        //decodeResourcesFull  resTable.listMainPackages() size 1 mMainPackages com.skyguard.mobile.apktooltest |mResSpecs  size = 1232
         attrDecoder.setCurrentPackage(resTable.listMainPackages().iterator().next());
         Directory inApk, in = null, out;
 
         try {
-            out = new FileDirectory(outDir);
-
+            out = new FileDirectory(outDir); //输出文件夹
+            //源app
             inApk = apkFile.getDirectory();
             out = out.createDir("res");
             if (inApk.containsDir("res")) {
@@ -254,12 +254,12 @@ final public class AndrolibResources {
             attrDecoder.setCurrentPackage(pkg);
 
             LOGGER.info("Decoding file-resources...");
-            for (ResResource res : pkg.listFiles()) {
+            for (ResResource res : pkg.listFiles()) {//释放res下的文件
                 fileDecoder.decode(res, in, out);
             }
 
             LOGGER.info("Decoding values */* XMLs...");
-            for (ResValuesFile valuesFile : pkg.listValuesFiles()) {
+            for (ResValuesFile valuesFile : pkg.listValuesFiles()) {//把value-xx全部写入文件
                 generateValuesFile(valuesFile, out, xmlSerializer);
             }
             generatePublicXml(pkg, out, xmlSerializer);
@@ -726,19 +726,19 @@ final public class AndrolibResources {
         serial.setDisabledAttrEscape(true);
         return serial;
     }
-
+    //建立各个value文件夹和内容
     private void generateValuesFile(ResValuesFile valuesFile, Directory out,
                                     ExtXmlSerializer serial) throws AndrolibException {
         try {
-            OutputStream outStream = out.getFileOutput(valuesFile.getPath());
+            OutputStream outStream = out.getFileOutput(valuesFile.getPath());//valuesFile.getPath()==values-az/strings.xml
             serial.setOutput((outStream), null);
             serial.startDocument(null, null);
             serial.startTag(null, "resources");
 
-            for (ResResource res : valuesFile.listResources()) {
-                if (valuesFile.isSynthesized(res)) {
+            for (ResResource res : valuesFile.listResources()) { //循环写strings.xml文件类容
+                if (valuesFile.isSynthesized(res)) { //res->(ResResSpec)mResSpec 0x7f0c0000 string/abc_action_bar_home_description
                     continue;
-                }
+                }//res.getValue() ResStringValue    ResScalarValue.serializeToResValuesXml
                 ((ResValuesXmlSerializable) res.getValue()).serializeToResValuesXml(serial, res);
             }
 

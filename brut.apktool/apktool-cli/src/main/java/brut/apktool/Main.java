@@ -633,7 +633,7 @@ public class Main {
         Main.advanceMode = advanceMode;
     }
 
-    private enum Verbosity {
+    public enum Verbosity {
         NORMAL, VERBOSE, QUIET
     }
 

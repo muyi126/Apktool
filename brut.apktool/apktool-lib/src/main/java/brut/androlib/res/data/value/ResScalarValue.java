@@ -65,7 +65,7 @@ public abstract class ResScalarValue extends ResIntBasedValue implements
     public boolean hasMultipleNonPositionalSubstitutions() throws AndrolibException {
         return ResXmlEncoders.hasMultipleNonPositionalSubstitutions(mRawValue);
     }
-
+//把内存中的value类型数据 写入文件  arrays attrs bools colors dimens drawables ids integers public strings styles  包括value-xx 的语言文件
     @Override
     public void serializeToResValuesXml(XmlSerializer serializer,
                                         ResResource res) throws IOException, AndrolibException {

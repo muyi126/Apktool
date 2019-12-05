@@ -17,6 +17,7 @@
 package brut.androlib.res.decoder;
 
 import brut.androlib.AndrolibException;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class ResStreamDecoderContainer {
     }
 
     public ResStreamDecoder getDecoder(String name) throws AndrolibException {
-        ResStreamDecoder decoder = mDecoders.get(name);
+        ResStreamDecoder decoder = mDecoders.get(name);//传入类型 raw  mipmap xml 9patch  mDecoders在
         if (decoder == null) {
             throw new AndrolibException("Undefined decoder: " + name);
         }
